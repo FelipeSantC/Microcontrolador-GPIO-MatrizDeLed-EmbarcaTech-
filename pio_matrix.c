@@ -20,6 +20,11 @@
 #define LINHAS 4
 #define COLUNAS 4
 
+extern void animacao_A(PIO pio, uint sm);
+extern void animacao_B(PIO pio, uint sm);
+extern void animacao_C(PIO pio, uint sm);
+extern void animacao_D(PIO pio, uint sm);
+extern void animacao_Hashtag(PIO pio, uint sm);
 extern void animacao3(PIO pio, uint sm);
 
 // Pinagem das linhas e colunas do teclado
@@ -34,18 +39,10 @@ const char teclas[LINHAS][COLUNAS] = {
     {'*', '0', '#', 'D'}
 };
 
-
-
-// Definição da intensidade de cores do LED
-uint32_t matrix_rgb(float b, float r, float g) {
-    return ((uint32_t)(g * 255) << 24) | ((uint32_t)(r * 255) << 16) | ((uint32_t)(b * 255) << 8);
-}
-
 // Acionamento da matriz de LEDs - ws2812b
-void desenhar_matriz(PIO pio, uint sm, const float *desenho, float r, float g, float b) {
-    for (int i = 0; i < NUM_PIXELS; i++) {
-        uint32_t valor_led = matrix_rgb(b, r, desenho[24 - i]); // Aplica a cor ao padrão
-        pio_sm_put_blocking(pio, sm, valor_led);
+void desenhar_matriz(PIO pio, uint sm, const uint32_t *desenho) {
+    for (int i = 0; i < NUM_PIXELS; i++) { // Aplica a cor ao padrão
+        pio_sm_put_blocking(pio, sm, desenho[24-i]);
     }
 }
 
@@ -108,8 +105,25 @@ int main() {
             printf("Tecla pressionada: %c\n", tecla);
 
             if (tecla == 'A') {
-                animacao3(pio, sm);
-            } 
+                animacao_A(pio, sm);
+            } else if (tecla == '1')
+            {
+                 animacao3(pio, sm);
+            }  else if (tecla == 'B')
+            {
+                 animacao_B(pio, sm);
+            } else if (tecla == 'C')
+            {
+                 animacao_C(pio, sm);
+            } else if (tecla == '#')
+            {
+                 animacao_Hashtag(pio, sm);
+            }  else if (tecla == 'D')
+            {
+                 animacao_D(pio, sm);
+            }
+            
+            
             tecla_anterior = tecla; // Atualiza a tecla anterior
         }
 

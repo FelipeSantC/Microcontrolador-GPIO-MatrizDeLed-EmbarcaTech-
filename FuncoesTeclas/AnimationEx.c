@@ -1,14 +1,6 @@
 #include <stdio.h>
-#include <stdlib.h>
-#include <math.h>
 #include "pico/stdlib.h"
 #include "hardware/pio.h"
-#include "hardware/clocks.h"
-#include "hardware/adc.h"
-#include "pico/bootrom.h"
-
-//arquivo .pio
-#include "pio_matrix.pio.h"
 
 #define NUM_PIXELS 25
 
@@ -62,7 +54,7 @@ void animacao3(PIO pio, uint sm) {
 
     // Exibindo a animação
     for (int i = 0; i < 5; i++) {
-        desenhar_matriz(pio, sm, frames[i], 0.0, 1.0, 0.0); // Verde
+        desenhar_matriz(pio, sm, frames[i], 1.0 , 1.0, 1.0); // Verde
         sleep_ms(200); // Intervalo entre os frames
     }
 }
