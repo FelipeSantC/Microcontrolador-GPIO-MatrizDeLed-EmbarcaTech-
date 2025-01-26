@@ -5,10 +5,12 @@
 #include "pico/bootrom.h"
 #include "pio_matrix.pio.h"
 
+//Matriz LED
 #define NUM_PIXELS 25
 #define OUT_PIN 10
 
-double framesAnimation[][25]={
+//Animação 2
+double framesAnimation2[][25]={
     {
         0.5, 0.0, 0.0, 0.0, 0.5,
         0.0, 0.5, 0.0, 0.5, 0.0,
@@ -45,7 +47,7 @@ double framesAnimation[][25]={
         0.3, 0.3, 0.3, 0.3, 0.3,
     }
 };
-
+//Controle de Intensidade
 uint32_t matrix_rgb(double b, double r, double g){
     unsigned char R, G, B;
     R = r*255;
@@ -53,7 +55,7 @@ uint32_t matrix_rgb(double b, double r, double g){
     B = b*255;
     return (G<<24) | (R<<16) | (B<<8);
 }
-
+//Parte de desenhar a animação
 void desenho_pio(double*desenho, uint32_t, valor_led, PIO pio, uint sm, double r, double g, double b){
     for(int16_t i=0;i<NUM_PIXELS;i++){
         if(i%2==0){
@@ -81,10 +83,7 @@ void Animation2(){
 
     while(true){
         for(int frame=0;frame<5;frame++){
-            for(uint16_t i=0;i<NUM_PIXELS;i++){
-                valor_led=apply_rbg_pattern(framesAnimation[frame][i],r,g,b,i)
-                pio_sm_put_blocking(pio,sm,valor_led);
-            }
+            desenho_pio(framesAnimation2[frame],valor_led,pio,sm,r,g,b)
             sleep_ms(200);
         }
     }
