@@ -53,14 +53,4 @@ void animacao3(PIO pio, uint sm) {
         desenhar_matriz(pio, sm, frames[frame], 0.0, 1.0, 0.0); // Apenas verde
         sleep_ms(200); // Intervalo entre os frames
     }
-
-    // Ao final da animação, redefina os LEDs para o estado desejado (apenas o ponto verde no meio)
-    const float final_frame[NUM_PIXELS] = {
-        0.0, 0.0, 0.0, 0.0, 0.0,
-        0.0, 0.0, 0.0, 0.0, 0.0,
-        0.0, 0.0, 1.0, 0.0, 0.0,
-        0.0, 0.0, 0.0, 0.0, 0.0,
-        0.0, 0.0, 0.0, 0.0, 0.0
-    };
-    desenhar_matriz(pio, sm, final_frame, 0.0, 1.0, 0.0); // Verde
 }
