@@ -7,6 +7,9 @@
 #include "hardware/adc.h"
 #include "pico/bootrom.h"
 
+// Declaração da função animacao3 (definida em animacao3.c)
+extern void animacao3(PIO pio, uint sm);
+
 //arquivo .pio
 #include "pio_matrix.pio.h"
 
@@ -91,59 +94,6 @@ char ler_teclado() {
     return '\0'; 
 }
 
-// Função de animação com 5 frames (efeito de onda)
-void animacao3(PIO pio, uint sm) {
-    // Definindo os 5 frames da animação
-    const float frame1[NUM_PIXELS] = {
-        0.0, 0.0, 0.0, 0.0, 0.0,
-        0.0, 0.0, 0.0, 0.0, 0.0,
-        0.0, 0.0, 1.0, 0.0, 0.0,
-        0.0, 0.0, 0.0, 0.0, 0.0,
-        0.0, 0.0, 0.0, 0.0, 0.0
-    };
-
-    const float frame2[NUM_PIXELS] = {
-        0.0, 0.0, 0.0, 0.0, 0.0,
-        0.0, 0.0, 1.0, 0.0, 0.0,
-        0.0, 1.0, 1.0, 1.0, 0.0,
-        0.0, 0.0, 1.0, 0.0, 0.0,
-        0.0, 0.0, 0.0, 0.0, 0.0
-    };
-
-    const float frame3[NUM_PIXELS] = {
-        0.0, 0.0, 1.0, 0.0, 0.0,
-        0.0, 1.0, 1.0, 1.0, 0.0,
-        1.0, 1.0, 1.0, 1.0, 1.0,
-        0.0, 1.0, 1.0, 1.0, 0.0,
-        0.0, 0.0, 1.0, 0.0, 0.0
-    };
-
-    const float frame4[NUM_PIXELS] = {
-        0.0, 0.0, 0.0, 0.0, 0.0,
-        0.0, 0.0, 1.0, 0.0, 0.0,
-        0.0, 1.0, 1.0, 1.0, 0.0,
-        0.0, 0.0, 1.0, 0.0, 0.0,
-        0.0, 0.0, 0.0, 0.0, 0.0
-    };
-
-    const float frame5[NUM_PIXELS] = {
-        0.0, 0.0, 0.0, 0.0, 0.0,
-        0.0, 0.0, 0.0, 0.0, 0.0,
-        0.0, 0.0, 1.0, 0.0, 0.0,
-        0.0, 0.0, 0.0, 0.0, 0.0,
-        0.0, 0.0, 0.0, 0.0, 0.0
-    };
-
-    // Array de frames
-    const float *frames[5] = {frame1, frame2, frame3, frame4, frame5};
-
-    // Exibindo a animação
-    for (int i = 0; i < 5; i++) {
-        desenhar_matriz(pio, sm, frames[i], 0.0, 1.0, 0.0); // Verde
-        sleep_ms(200); // Intervalo entre os frames
-    }
-}
-
 // Função principal
 int main() {
     PIO pio = pio0; 
@@ -176,7 +126,7 @@ int main() {
                 desenhar_matriz(pio, sm, desenho, 1.0, 0.0, 0.0); // Vermelho
             } else if (tecla == '3') {
                 // Executa a animação 3
-                animacao3(pio, sm);
+                animacao3(pio, sm); // Chamada da função da animação 3
             } else {
                 // Desenho "X" (azul)
                 desenhar_matriz(pio, sm, desenho2, 0.0, 0.0, 1.0); // Azul
