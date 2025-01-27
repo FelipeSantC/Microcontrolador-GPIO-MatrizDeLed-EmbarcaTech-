@@ -7,9 +7,6 @@
 #include "hardware/adc.h"
 #include "pico/bootrom.h"
 
-// Declaração da função animacao3 (definida em animacao3.c)
-extern void animacao3(PIO pio, uint sm);
-
 //arquivo .pio
 #include "pio_matrix.pio.h"
 
@@ -23,6 +20,13 @@ extern void animacao3(PIO pio, uint sm);
 #define LINHAS 4
 #define COLUNAS 4
 
+extern void animacao_A(PIO pio, uint sm);
+extern void animacao_B(PIO pio, uint sm);
+extern void animacao_C(PIO pio, uint sm);
+extern void animacao_D(PIO pio, uint sm);
+extern void animacao_Hashtag(PIO pio, uint sm);
+extern void animacaoEx(PIO pio, uint sm);
+
 // Pinagem das linhas e colunas do teclado
 const uint pinos_linhas[LINHAS] = {8, 7, 6, 5}; 
 const uint pinos_colunas[COLUNAS] = {4, 3, 2, 28}; 
@@ -35,33 +39,10 @@ const char teclas[LINHAS][COLUNAS] = {
     {'*', '0', '#', 'D'}
 };
 
-// Vetores de imagens para matriz de LEDs
-const float desenho[NUM_PIXELS] = {
-    0.0, 0.3, 0.3, 0.3, 0.0,
-    0.0, 0.3, 0.0, 0.3, 0.0, 
-    0.0, 0.3, 0.3, 0.3, 0.0,
-    0.0, 0.3, 0.0, 0.3, 0.0,
-    0.0, 0.3, 0.3, 0.3, 0.0
-};
-
-const float desenho2[NUM_PIXELS] = {
-    1.0, 0.0, 0.0, 0.0, 1.0,
-    0.0, 1.0, 0.0, 1.0, 0.0, 
-    0.0, 0.0, 1.0, 0.0, 0.0,
-    0.0, 1.0, 0.0, 1.0, 0.0,
-    1.0, 0.0, 0.0, 0.0, 1.0
-};
-
-// Definição da intensidade de cores do LED
-uint32_t matrix_rgb(float b, float r, float g) {
-    return ((uint32_t)(g * 255) << 24) | ((uint32_t)(r * 255) << 16) | ((uint32_t)(b * 255) << 8);
-}
-
 // Acionamento da matriz de LEDs - ws2812b
-void desenhar_matriz(PIO pio, uint sm, const float *desenho, float r, float g, float b) {
-    for (int i = 0; i < NUM_PIXELS; i++) {
-        uint32_t valor_led = matrix_rgb(b, r, desenho[24 - i]); // Aplica a cor ao padrão
-        pio_sm_put_blocking(pio, sm, valor_led);
+void desenhar_matriz(PIO pio, uint sm, const uint32_t *desenho) {
+    for (int i = 0; i < NUM_PIXELS; i++) { // Aplica a cor ao padrão
+        pio_sm_put_blocking(pio, sm, desenho[24-i]);
     }
 }
 
@@ -94,6 +75,8 @@ char ler_teclado() {
     return '\0'; 
 }
 
+
+
 // Função principal
 int main() {
     PIO pio = pio0; 
@@ -121,17 +104,26 @@ int main() {
         if (tecla != '\0' && tecla != tecla_anterior) { // Só redesenha se a tecla mudar
             printf("Tecla pressionada: %c\n", tecla);
 
-            if (tecla == 'C') {
-                // Desenho padrão (vermelho)
-                desenhar_matriz(pio, sm, desenho, 1.0, 0.0, 0.0); // Vermelho
-            } else if (tecla == '3') {
-                // Executa a animação 3
-                animacao3(pio, sm); // Chamada da função da animação 3
-            } else {
-                // Desenho "X" (azul)
-                desenhar_matriz(pio, sm, desenho2, 0.0, 0.0, 1.0); // Azul
+            if (tecla == 'A') {
+                animacao_A(pio, sm);
+            } else if (tecla == '1')
+            {
+                 animacaoEx(pio, sm);
+            }  else if (tecla == 'B')
+            {
+                 animacao_B(pio, sm);
+            } else if (tecla == 'C')
+            {
+                 animacao_C(pio, sm);
+            } else if (tecla == '#')
+            {
+                 animacao_Hashtag(pio, sm);
+            }  else if (tecla == 'D')
+            {
+                 animacao_D(pio, sm);
             }
-
+            
+            
             tecla_anterior = tecla; // Atualiza a tecla anterior
         }
 
