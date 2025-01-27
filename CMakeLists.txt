@@ -43,6 +43,8 @@ add_executable(pio_matrix pio_matrix.c
     FuncoesTeclas/Tecla_C.c
     FuncoesTeclas/Tecla_D.c
     FuncoesTeclas/Tecla_Hashtag.c
+    FuncoesTeclas/Animation3.c
+
 
     )
 
