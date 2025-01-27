@@ -13,48 +13,50 @@
 #define NUM_PIXELS 25
 
 // Declaração da função desenhar_matriz
-void desenhar_matriz(PIO pio, uint sm, const float *desenho, float r, float g, float b);
+void desenhar_matriz(PIO pio, uint sm, const uint32_t *desenho);
 
 // Função de animação com 5 frames (efeito de onda)
 void animacao1(PIO pio, uint sm) {
     // Definindo os 5 frames da animação
     // Vetores de imagens para matriz de LEDs
-    const float frame1[NUM_PIXELS] = {
-        0.0, 0.0, 0.0, 0.0, 0.0,
-        0.0, 0.0, 0.0, 0.0, 0.0,
-        0.0, 0.0, 1.0, 0.0, 0.0,
-        0.0, 1.0, 1.0, 1.0, 0.0,
-        1.0, 1.0, 1.0, 1.0, 1.0,
+    const uint32_t frame1[NUM_PIXELS] = {
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00,
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00,
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00,
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00
     };
 
-    const float frame2[NUM_PIXELS] = {
-       1.0, 1.0, 1.0, 1.0, 1.0,
-       0.0, 1.0, 1.0, 1.0, 0.0,
-       0.0, 0.0, 1.0, 0.0, 0.0, 
-       0.0, 0.0, 0.0, 0.0, 0.0,
-       0.0, 0.0, 0.0, 0.0, 0.0,
-    };
-    const float frame3[NUM_PIXELS] = {
-        1.0, 0.0, 0.0, 0.0, 0.0,
-        0.0, 0.0, 0.0, 1.0, 1.0,
-        1.0, 1.0, 1.0, 0.0, 0.0,
-        0.0, 0.0, 0.0, 1.0, 1.0,
-        1.0, 0.0, 0.0, 0.0, 0.0,
+    const uint32_t frame2[NUM_PIXELS] = {
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00,
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00,
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00,
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00
     };
 
-    const float frame4[NUM_PIXELS] = {
-        0.0, 0.0, 0.0, 0.0, 1.0,
-        1.0, 1.0, 0.0, 0.0, 0.0,
-        0.0, 0.0, 1.0, 1.0, 1.0,
-        1.0, 1.0, 0.0, 0.0, 0.0,
-        0.0, 0.0, 0.0, 0.0, 1.0,
+    const uint32_t frame3[NUM_PIXELS] = {
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00,
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00,
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00,
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00
     };
-    const float frame5[NUM_PIXELS] = {
-        1.0, 0.0, 0.0, 0.0, 1.0,
-        0.0, 1.0, 0.0, 1.0, 0.0,
-        0.0, 0.0, 1.0, 0.0, 0.0,
-        0.0, 1.0, 0.0, 1.0, 0.0,
-        1.0, 0.0, 0.0, 0.0, 1.0,
+
+    const uint32_t frame4[NUM_PIXELS] = {
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00,
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00,
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00,
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00
+    };
+
+    const uint32_t frame5[NUM_PIXELS] = {
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00,
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00,
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00,
+        0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00, 0x0000FF00
     };
 
     // Array de frames
@@ -62,7 +64,7 @@ void animacao1(PIO pio, uint sm) {
 
     // Exibindo a animação
     for (int i = 0; i < 5; i++) {
-        desenhar_matriz(pio, sm, frames[i], 0.0, 1.0, 0.0); // Verde
+        desenhar_matriz(pio, sm, frames[i]); // Verde
         sleep_ms(200); // Intervalo entre os frames
     }
 }
