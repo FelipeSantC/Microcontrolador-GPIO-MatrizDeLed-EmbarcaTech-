@@ -20,25 +20,16 @@
 #define LINHAS 4
 #define COLUNAS 4
 
+extern void animacao_1(PIO pio, uint sm);
+extern void animacao_3(PIO pio, uint sm);
 extern void animacao_A(PIO pio, uint sm);
 extern void animacao_B(PIO pio, uint sm);
 extern void animacao_C(PIO pio, uint sm);
 extern void animacao_D(PIO pio, uint sm);
 extern void animacao_Hashtag(PIO pio, uint sm);
 extern void animacaoEx(PIO pio, uint sm);
-
-
-// Pinagem das linhas e colunas do teclado
-const uint pinos_linhas[LINHAS] = {8, 7, 6, 5}; 
-const uint pinos_colunas[COLUNAS] = {4, 3, 2, 28}; 
-
-// Mapeamento das teclas do teclado
-const char teclas[LINHAS][COLUNAS] = {
-    {'1', '2', '3', 'A'},
-    {'4', '5', '6', 'B'},
-    {'7', '8', '9', 'C'},
-    {'*', '0', '#', 'D'}
-};
+extern void configurar_teclado();
+extern char ler_teclado();
 
 // Acionamento da matriz de LEDs - ws2812b
 void desenhar_matriz(PIO pio, uint sm, const uint32_t *desenho) {
@@ -46,36 +37,6 @@ void desenhar_matriz(PIO pio, uint sm, const uint32_t *desenho) {
         pio_sm_put_blocking(pio, sm, desenho[24-i]);
     }
 }
-
-// Configuração do teclado
-void configurar_teclado() {
-    for (int i = 0; i < LINHAS; i++) {
-        gpio_init(pinos_linhas[i]);
-        gpio_set_dir(pinos_linhas[i], GPIO_OUT);
-    }
-    for (int i = 0; i < COLUNAS; i++) {
-        gpio_init(pinos_colunas[i]);
-        gpio_set_dir(pinos_colunas[i], GPIO_IN);
-        gpio_pull_down(pinos_colunas[i]);
-    }
-}
-
-// Leitura do teclado com debounce
-char ler_teclado() {
-    for (int linha = 0; linha < LINHAS; linha++) {
-        gpio_put(pinos_linhas[linha], 1);
-        sleep_ms(5); // Debounce
-        for (int coluna = 0; coluna < COLUNAS; coluna++) {
-            if (gpio_get(pinos_colunas[coluna])) {
-                gpio_put(pinos_linhas[linha], 0);
-                return teclas[linha][coluna];
-            }
-        }
-        gpio_put(pinos_linhas[linha], 0);
-    }
-    return '\0'; 
-}
-
 
 
 // Função principal
@@ -104,27 +65,38 @@ int main() {
         char tecla = ler_teclado();
         if (tecla != '\0' && tecla != tecla_anterior) { // Só redesenha se a tecla mudar
             printf("Tecla pressionada: %c\n", tecla);
+            switch (tecla)
+            {
+            case '1':
+                animacao_1(pio, sm);
+                break;
 
-            if (tecla == 'A') {
+            case '3':
+                animacao_3(pio, sm);
+                break;
+            
+            case 'A':
                 animacao_A(pio, sm);
-            } else if (tecla == '1')
-            {
-                 animacaoEx(pio, sm);
-            }  else if (tecla == 'B')
-            {
-                 animacao_B(pio, sm);
-            } else if (tecla == 'C')
-            {
-                 animacao_C(pio, sm);
-            } else if (tecla == '#')
-            {
-                 animacao_Hashtag(pio, sm);
-            }  else if (tecla == 'D')
-            {
-                 animacao_D(pio, sm);
+                break;
+
+            case 'B':
+                animacao_B(pio, sm);
+                break;
+
+            case 'C':
+                animacao_C(pio, sm);
+                break;
+
+            case 'D':
+                animacao_D(pio, sm);
+                break;
+
+            case '#':
+                animacao_Hashtag(pio, sm);
+                break;
+            default:
+                break;
             }
-            
-            
             tecla_anterior = tecla; // Atualiza a tecla anterior
         }
 

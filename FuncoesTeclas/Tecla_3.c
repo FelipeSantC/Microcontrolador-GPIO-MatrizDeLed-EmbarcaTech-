@@ -8,7 +8,7 @@
 void desenhar_matriz(PIO pio, uint sm, const uint32_t *desenho);
 
 // Função de animação com 5 frames (efeito de onda)
-void animacao3(PIO pio, uint sm) {
+void animacao_3(PIO pio, uint sm) {
     // Definindo os 5 frames da animação
     const uint32_t frames[5][NUM_PIXELS] = {
         {

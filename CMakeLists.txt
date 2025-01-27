@@ -37,14 +37,14 @@ pico_sdk_init()
 
 add_executable(pio_matrix pio_matrix.c 
 
-    FuncoesTeclas/AnimationEx.c  
+    FuncoesTeclas/Tecla_1.c
+    FuncoesTeclas/Tecla_3.c
     FuncoesTeclas/Tecla_A.c
     FuncoesTeclas/Tecla_B.c 
     FuncoesTeclas/Tecla_C.c
     FuncoesTeclas/Tecla_D.c
     FuncoesTeclas/Tecla_Hashtag.c
-    FuncoesTeclas/Animation3.c
-
+    TecladoMatriz/set_teclado.c
 
     )
 
