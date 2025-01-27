@@ -21,7 +21,9 @@
 #define COLUNAS 4
 
 extern void animacao_1(PIO pio, uint sm);
+extern void animacao_2(PIO pio, uint sm);
 extern void animacao_3(PIO pio, uint sm);
+extern void animacao_4(PIO pio, uint sm);
 extern void animacao_A(PIO pio, uint sm);
 extern void animacao_B(PIO pio, uint sm);
 extern void animacao_C(PIO pio, uint sm);
@@ -70,9 +72,17 @@ int main() {
             case '1':
                 animacao_1(pio, sm);
                 break;
+            
+            case '2':
+                animacao_2(pio, sm);
+                break;
 
             case '3':
                 animacao_3(pio, sm);
+                break;
+
+            case '4':
+                animacao_4(pio, sm);
                 break;
             
             case 'A':
