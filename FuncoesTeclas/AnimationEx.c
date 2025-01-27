@@ -8,7 +8,7 @@
 void desenhar_matriz(PIO pio, uint sm, const float *desenho, float r, float g, float b);
 
 // Função de animação com 5 frames (efeito de onda)
-void animacao3(PIO pio, uint sm) {
+void animacaoEx(PIO pio, uint sm) {
     // Definindo os 5 frames da animação
     // Vetores de imagens para matriz de LEDs
     const float frame1[NUM_PIXELS] = {
