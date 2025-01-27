@@ -35,7 +35,16 @@ pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(pio_matrix pio_matrix.c )
+add_executable(pio_matrix pio_matrix.c 
+
+    FuncoesTeclas/AnimationEx.c  
+    FuncoesTeclas/Tecla_A.c
+    FuncoesTeclas/Tecla_B.c 
+    FuncoesTeclas/Tecla_C.c
+    FuncoesTeclas/Tecla_D.c
+    FuncoesTeclas/Tecla_Hashtag.c
+
+    )
 
 pico_set_program_name(pio_matrix "pio_matrix")
 pico_set_program_version(pio_matrix "0.1")
@@ -66,4 +75,3 @@ target_link_libraries(pio_matrix
         )
 
 pico_add_extra_outputs(pio_matrix)
-
