@@ -109,6 +109,7 @@ int main() {
             } else if (tecla == '1')
             {
                  animacaoEx(pio, sm);
+
             }  else if (tecla == 'B')
             {
                  animacao_B(pio, sm);
