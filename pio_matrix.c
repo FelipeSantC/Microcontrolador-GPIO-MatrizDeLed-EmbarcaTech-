@@ -27,6 +27,7 @@ extern void animacao_D(PIO pio, uint sm);
 extern void animacao_Hashtag(PIO pio, uint sm);
 extern void animacaoEx(PIO pio, uint sm);
 
+
 // Pinagem das linhas e colunas do teclado
 const uint pinos_linhas[LINHAS] = {8, 7, 6, 5}; 
 const uint pinos_colunas[COLUNAS] = {4, 3, 2, 28}; 
@@ -109,7 +110,6 @@ int main() {
             } else if (tecla == '1')
             {
                  animacaoEx(pio, sm);
-
             }  else if (tecla == 'B')
             {
                  animacao_B(pio, sm);
